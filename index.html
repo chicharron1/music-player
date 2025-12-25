@@ -1,0 +1,42 @@
+<head>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div class="vista" id="vista-lista">
+        <div class="botones-navegacion">
+            <button id="btn-ir-a-reproduciendo" onclick="mostrarVista('vista-reproduciendo')">ir a vista reproduciendo</button>
+            <button id="btn-buscar-archivo">seleccionar carpeta</button>
+
+            <div id="playlist"></div>
+        </div>
+    </div>
+
+    <div class="vista" id="vista-reproduciendo">
+        <h1>Ahora reproduciendo</h1>
+        <div class="botones-navegacion">
+            <button id="btn-ir-a-lista" onclick="mostrarVista('vista-lista')">lista</button>
+        </div>
+        <div class="reproduciendo">
+            <div class="lyrics">
+            </div>
+            <div class="reproductor">
+                <h2>Nombre canción</h2>
+                <div class="barra-progreso">
+                    <div id="tiempo">00:00 / 00:00</div>
+                    <input type="range" min="1" max="100" value="0" class="slider" onchange="seekTo()">
+                </div>
+                <div class="botones-control-musica">
+                    <button id="btn-ant">anterior</button>
+                    <button id="btn-retrocede">retrocede</button>
+                    <button id="pausa">play</button>
+                    <button id="btn-adelanta">adelanta</button>
+                    <button id="btn-sig">saltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/app.js"></script>
+</body>
