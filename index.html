@@ -4,7 +4,7 @@
 </head>
 
 <body>
-    <div class="vista" id="vista-lista">
+    <div class="vista" id="vista-lista" style="display: none;">
         <div class="botones-navegacion">
             <button id="btn-ir-a-reproduciendo" onclick="mostrarVista('vista-reproduciendo')">ir a vista reproduciendo</button>
             <button id="btn-buscar-archivo">seleccionar carpeta</button>
@@ -24,7 +24,7 @@
             <div class="reproductor">
                 <h2>Nombre canción</h2>
                 <div class="barra-progreso">
-                    <div id="tiempo">00:00 / 00:00</div>
+                    <div id="tiempo"><span id="tiempo-span"></span> / <span id="duracion-span"></span></div>
                     <input type="range" min="1" max="100" value="0" class="slider" onchange="seekTo()">
                 </div>
                 <div class="botones-control-musica">

@@ -3,14 +3,16 @@ const btnRetrocede = document.getElementById('btn-retrocede');
 const btnPausa = document.getElementById('btn-pausa');
 const btnAdelanta = document.getElementById('btn-adelanta');
 const btnSiguiente = document.getElementById('btn-sig');
-const tiempoDisplay = document.getElementById('tiempo');
 const btnBuscarArchivo = document.getElementById("btn-buscar-archivo");
 const playlistDiv = document.getElementById("playlist");
+const tiempoSpan = document.getElementById("tiempo-span");
+const duracionSpan = document.getElementById("duracion-span");
 
 let audio = new Audio();
 let isPlaying = false;
 let carpetaPath = null;
 let canciones = [];
+let cancionReproduciendo = null;
 
 function mostrarVista(vistaId) {
   document.querySelectorAll('.vista').forEach(div => {
@@ -32,12 +34,30 @@ function renderLista(){
         div.textContent = cancion.nombre;
         div.className = "song";
         div.addEventListener("click", () => {
+            cancionReproduciendo = cancion;
             audio.src = `${carpetaPath}/${cancion.audio}`;
+            audio.play();
+            isPlaying = true;
+            mostrarVista('vista-reproduciendo');
         });
         playlistDiv.appendChild(div);
     })
     console.log("Renderizando lista:", canciones);
 }
+
+audio.addEventListener('timeupdate', () => {
+  const tiempoActual = audio.currentTime;
+  const tiempoDuracion = audio.duration;
+  tiempoSpan.textContent = escribirTiempo(tiempoActual);
+  duracionSpan.textContent = escribirTiempo(tiempoDuracion);
+});
+
+function escribirTiempo(segundos) {
+  if (isNaN(segundos)) return '00:00';
+  const minutos = Math.floor(segundos / 60);
+  const seg = Math.floor(segundos % 60);
+  return `${minutos.toString().padStart(2,'0')}:${seg.toString().padStart(2,'0')}`;
+};
 
 btnBuscarArchivo.addEventListener('click', async () => {
     carpetaPath = await window.electronAPI.openFolder();
