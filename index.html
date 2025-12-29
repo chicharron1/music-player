@@ -14,7 +14,6 @@
     </div>
 
     <div class="vista" id="vista-reproduciendo">
-        <h1>Ahora reproduciendo</h1>
         <div class="botones-navegacion">
             <button id="btn-ir-a-lista" onclick="mostrarVista('vista-lista')">lista</button>
         </div>
@@ -22,15 +21,15 @@
             <div class="lyrics">
             </div>
             <div class="reproductor">
-                <h2>Nombre canción</h2>
+                <h2 id="nombre-cancion-span">Nombre canción</h2>
                 <div class="barra-progreso">
                     <div id="tiempo"><span id="tiempo-span"></span> / <span id="duracion-span"></span></div>
-                    <input type="range" min="1" max="100" value="0" class="slider" onchange="seekTo()">
+                    <input id="slider-tiempo" type="range" min="1" max="100" value="0" class="slider" onchange="controlTiempo()">
                 </div>
                 <div class="botones-control-musica">
                     <button id="btn-ant">anterior</button>
                     <button id="btn-retrocede">retrocede</button>
-                    <button id="pausa">play</button>
+                    <button id="btn-pausa">play</button>
                     <button id="btn-adelanta">adelanta</button>
                     <button id="btn-sig">saltar</button>
                 </div>
