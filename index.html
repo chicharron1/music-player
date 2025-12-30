@@ -23,15 +23,15 @@
             <div class="reproductor">
                 <h2 id="nombre-cancion-span">Nombre canción</h2>
                 <div class="barra-progreso">
-                    <div id="tiempo"><span id="tiempo-span"></span> / <span id="duracion-span"></span></div>
-                    <input id="slider-tiempo" type="range" min="1" max="100" value="0" class="slider" onchange="controlTiempo()">
+                    <div id="tiempo"><span id="tiempo-span">00:00</span> / <span id="duracion-span">00:00</span></div>
+                    <input id="slider-tiempo" type="range" min="1" max="100" value="0" class="slider" onchange="controlTiempo()" disabled>
                 </div>
                 <div class="botones-control-musica">
-                    <button id="btn-ant">anterior</button>
+                    <button id="btn-ant" disabled>anterior</button>
                     <button id="btn-retrocede">retrocede</button>
                     <button id="btn-pausa">play</button>
                     <button id="btn-adelanta">adelanta</button>
-                    <button id="btn-sig">saltar</button>
+                    <button id="btn-sig" disabled>saltar</button>
                 </div>
             </div>
         </div>

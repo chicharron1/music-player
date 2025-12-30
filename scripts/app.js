@@ -27,7 +27,19 @@ function mostrarVista(vistaId) {
     renderLista();
   }
   if (vistaId == 'vista-reproduciendo') {
-    nombreCancionSpan.textContent = cancionReproduciendo.nombre;
+    if (canciones.length > 0) {
+      btnAnterior.disabled = false;
+      btnSiguiente.disabled = false;
+      nombreCancionSpan.textContent = cancionReproduciendo.nombre;
+    } else {
+      btnAnterior.disabled = true;
+      btnSiguiente.disabled = true;
+    }
+    if (cancionReproduciendo == null) {
+      sliderTiempo.disabled = true;
+    } else {
+      sliderTiempo.disabled = false;
+    }
   }
 }
 
@@ -43,6 +55,7 @@ function renderLista(){
             audio.src = `${carpetaPath}/${cancion.audio}`;
             audio.play();
             isPlaying = true;
+            console.log(cancion.id);
             mostrarVista('vista-reproduciendo');
         });
         playlistDiv.appendChild(div);
@@ -64,6 +77,11 @@ function escribirTiempo(segundos) {
   const seg = Math.floor(segundos % 60);
   return `${minutos.toString().padStart(2,'0')}:${seg.toString().padStart(2,'0')}`;
 };
+
+function controlTiempo() {
+  nuevoTiempo = sliderTiempo.value * audio.duration / 100;
+  audio.currentTime = nuevoTiempo;
+}
 
 btnBuscarArchivo.addEventListener('click', async () => {
     carpetaPath = await window.electronAPI.openFolder();
@@ -110,7 +128,45 @@ btnRetrocede.addEventListener('click', () => {
   audio.currentTime = nuevoTiempo;
 });
 
-function controlTiempo() {
-  nuevoTiempo = sliderTiempo.value * audio.duration / 100;
-  audio.currentTime = nuevoTiempo;
+function encontrarIndex(cancion) {
+  let index = null;
+  let i = 0;
+  while (i < canciones.length) {
+    cancion = canciones[i]
+    if (cancion == cancionReproduciendo) {
+      index = i;
+    }
+    i++;
+  }
+  return index;
 }
+
+btnSiguiente.addEventListener('click', () => {
+  let nuevoIndex = null;
+  let index = encontrarIndex(cancionReproduciendo);
+
+  if (index == canciones.length - 1 || isNaN(index)) {
+    nuevoIndex = 0;
+  } else {
+    nuevoIndex = index + 1;
+  }
+  cancionReproduciendo = canciones[nuevoIndex];
+  audio.src = `${carpetaPath}/${cancionReproduciendo.audio}`;
+  audio.play();
+  mostrarVista('vista-reproduciendo');
+});
+
+btnAnterior.addEventListener('click', () => {
+  let nuevoIndex = null;
+  let index = encontrarIndex(cancionReproduciendo);
+
+  if (index == 0 || isNaN(index)) {
+    nuevoIndex = canciones.length - 1;
+  } else {
+    nuevoIndex = index - 1;
+  }
+  cancionReproduciendo = canciones[nuevoIndex];
+  audio.src = `${carpetaPath}/${cancionReproduciendo.audio}`;
+  audio.play();
+  mostrarVista('vista-reproduciendo');
+});
