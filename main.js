@@ -37,11 +37,16 @@ function createWindow() {
         .map(f => {
             const nombre_cancion = path.basename(f, path.extname(f));
             const letraPath = path.join(carpetaPath, `${nombre_cancion}_letra.txt`);
+            let letraData = null;
+            if (fs.existsSync(letraPath)) {
+                letraData = fs.readFileSync(letraPath, 'utf8');
+            }
 
             return {
                 nombre: nombre_cancion,
                 audio: f,
-                ...(fs.existsSync(letraPath) && { letra: letraPath })
+                ...(fs.existsSync(letraPath) && { Pathletra: letraPath }),
+                ...(letraData && { letra: letraData })
             };
         });
     });

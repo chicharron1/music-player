@@ -9,6 +9,7 @@ const playlistDiv = document.getElementById("playlist");
 const tiempoSpan = document.getElementById("tiempo-span");
 const duracionSpan = document.getElementById("duracion-span");
 const nombreCancionSpan = document.getElementById('nombre-cancion-span');
+const divLetra = document.getElementById('div-letra');
 
 let audio = new Audio();
 let isPlaying = false;
@@ -27,7 +28,7 @@ function mostrarVista(vistaId) {
     renderLista();
   }
   if (vistaId == 'vista-reproduciendo') {
-    if (canciones.length > 0) {
+    if (canciones.length > 0 && cancionReproduciendo != null) {
       btnAnterior.disabled = false;
       btnSiguiente.disabled = false;
       nombreCancionSpan.textContent = cancionReproduciendo.nombre;
@@ -39,6 +40,7 @@ function mostrarVista(vistaId) {
       sliderTiempo.disabled = true;
     } else {
       sliderTiempo.disabled = false;
+      divLetra.textContent = cancionReproduciendo.letra;
     }
   }
 }
